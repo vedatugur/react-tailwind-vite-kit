@@ -1,0 +1,13 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+commit_msg_file="$1"
+commit_msg=$(cat "$commit_msg_file")
+
+regex="^((Feature|Fix|Refactor|Docs|Style|Test|Chore|Optimization):[[:space:]].*)$"
+
+if ! echo "$commit_msg" | grep -iqE "$regex"; then
+  echo "Invalid commit message format. Please follow the format: 'Category: Message'"
+  echo "Allowed categories: Feature, Fix, Refactor, Docs, Style, Test, Chore, Optimization"
+  exit 1
+fi
